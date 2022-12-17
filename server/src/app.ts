@@ -1,8 +1,7 @@
 import express from 'express';
+import { projectRouter } from './routes/projectRoutes';
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('hello world');
-});
+app.use('/api/projects', projectRouter);
 
 app.listen(3000);

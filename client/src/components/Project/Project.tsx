@@ -1,9 +1,7 @@
 import React from 'react';
-import List from '../components/List';
+import List from './List';
 
-const cards = [{}];
-
-const Board = () => {
+const Project = () => {
   return (
     <div className='container mx-auto p-6'>
       <div>
@@ -20,4 +18,4 @@ const Board = () => {
   );
 };
 
-export default Board;
+export default Project;

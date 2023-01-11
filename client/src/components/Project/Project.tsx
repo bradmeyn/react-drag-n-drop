@@ -1,20 +1,23 @@
-import React from 'react';
+import { useState } from 'react';
 import List from './List';
+import { testProject } from '../../api/data';
+import Navbar from './Navbar';
 
 const Project = () => {
+  const [project, setProject] = useState(testProject);
+  const lists = ['To Do', 'In Progress', 'Completed'];
   return (
-    <div className='container mx-auto p-6'>
-      <div>
-        <h1 className='font-extrabold text-slate-50 text-2xl mb-3'>
-          Project Name
-        </h1>
+    <>
+      <Navbar name={project.name} />
+      <div className='container mx-auto p-4'>
+        <div></div>
+        <div className='flex gap-3'>
+          {lists.map((title) => (
+            <List title={title} />
+          ))}
+        </div>
       </div>
-      <div className='flex gap-3'>
-        <List title={'To Do'} />
-        <List title={'In Progress'} />
-        <List title={'Completed'} />
-      </div>
-    </div>
+    </>
   );
 };
 

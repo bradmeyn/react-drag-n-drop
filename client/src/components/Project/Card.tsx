@@ -1,15 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faPlus } from '@fortawesome/pro-regular-svg-icons';
 import { faPencil } from '@fortawesome/pro-light-svg-icons';
 
-const Card = ({ id, summary }) => {
+const Card = ({ id, summary }: { id: number; summary?: string }) => {
   const [modalActive, setModalActive] = useState(false);
   const modal = useRef(null);
   const searchInput = useRef(null);
 
-  const openModal = (e) => {
+  const openModal = (e: MouseEvent) => {
     e.stopPropagation();
     setModalActive(true);
   };
@@ -20,7 +20,6 @@ const Card = ({ id, summary }) => {
 
   useOutsideClick(modal, () => {
     if (modalActive) {
-      console.log('modal closed');
       setModalActive(false);
     }
   });
@@ -69,7 +68,7 @@ const Card = ({ id, summary }) => {
   return (
     <li key={id} className='mb-2'>
       <button
-        className='text-slate-100 w-full text-start p-3 bg-slate-500 rounded shadow-sm hover:bg-sky-700 flex justify-between items-center'
+        className='text-slate-100 w-full text-start p-4 bg-slate-700 rounded shadow-sm hover:bg-sky-700 flex justify-between items-center'
         onClick={openModal}
       >
         <span>{summary}</span> <FontAwesomeIcon icon={faPencil} className='' />

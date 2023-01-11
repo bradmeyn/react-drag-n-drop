@@ -18,9 +18,9 @@ const tasks = [
   },
 ];
 
-const List = ({ title }) => {
+const List = ({ title }: { title: string | undefined }) => {
   return (
-    <div className='p-3 bg-slate-600 rounded w-full'>
+    <div className='p-2 rounded w-full'>
       <h2 className='p-3 font-bold underline-offset-1 text-slate-100 '>
         {title}
       </h2>

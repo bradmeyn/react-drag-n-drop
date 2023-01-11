@@ -9,7 +9,7 @@ const logoStyle: Object = {
   '--fa-secondary-opacity': '1',
 };
 
-const Navbar = () => {
+const Navbar = ({ name }: { name: string | undefined }) => {
   return (
     <nav className='navbar bg-base-300 px-3'>
       <div className='flex md:justify-between container w-full mx-auto justify-between'>
@@ -17,17 +17,19 @@ const Navbar = () => {
           to='/projects'
           className='text-white align-middle flex items-center'
         >
-          <div className='text-3xl'>
+          <div className='text-2xl'>
             <FontAwesomeIcon
               icon={faScrewdriverWrench}
               style={logoStyle}
               className='mr-3 '
             />
-            <span className='font-semibold'>Workshop</span>
+            <h1 className='font-bold inline-block'>{name}</h1>
           </div>
         </Link>
 
-        <span className='rounded-full bg-sky-600 text-slate-100 p-2'>BM</span>
+        <span className='rounded-full bg-sky-600 text-slate-100 p-2 text-sm font-semibold'>
+          BM
+        </span>
       </div>
     </nav>
   );

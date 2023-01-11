@@ -1,4 +1,10 @@
-import { MouseEventHandler, useEffect, useRef, useState } from 'react';
+import {
+  MouseEvent,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faPlus } from '@fortawesome/pro-regular-svg-icons';
@@ -8,11 +14,13 @@ const NewProjectModal = () => {
   const modal = useRef(null);
   const searchInput = useRef(null);
 
-  const openModal = () => {
+  const openModal = (e: MouseEvent) => {
+    e.stopPropagation();
     setModalActive(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (e: MouseEvent) => {
+    e.stopPropagation();
     setModalActive(false);
   };
 

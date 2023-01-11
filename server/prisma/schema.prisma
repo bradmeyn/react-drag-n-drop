@@ -11,10 +11,11 @@ datasource db {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   firstName String
   lastName  String
-  email     String @unique
+  email     String    @unique
+  projects  Project[]
 }
 
 model Project {
@@ -25,6 +26,8 @@ model Project {
   cards      Card[]
   repository String?
   liveSite   String?
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
 }
 
 model Card {
@@ -34,7 +37,7 @@ model Card {
   title     String
   detail    String?
   status    CardStatus @default(TODO)
-  Project   Project?   @relation(fields: [projectId], references: [id])
+  project   Project?   @relation(fields: [projectId], references: [id])
   projectId Int?
 }
 

@@ -13,14 +13,7 @@ const Home = () => {
 
   return (
     <div className='text-start p-3 container mx-auto'>
-      <div className='flex flex-wrap gap-4 justify-center '>
-        <button className='p-3 rounded w-full bg-slate-300 hover:bg-slate-300/80 text-slate-600 font-bold'>
-          <FontAwesomeIcon icon={faPlus} className='text-4xl' />
-        </button>
-        <button className='p-3 rounded w-full bg-slate-300 hover:bg-slate-300/80 text-slate-600 font-bold'>
-          <FontAwesomeIcon icon={faPlus} className='text-4xl' />
-        </button>
-      </div>
+      <div className='flex flex-wrap gap-4 justify-center '></div>
     </div>
   );
 };

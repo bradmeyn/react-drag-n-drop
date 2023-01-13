@@ -11,7 +11,7 @@ const logoStyle: Object = {
 
 const Navbar = ({ name }: { name: string | undefined }) => {
   return (
-    <nav className='navbar bg-base-300 px-3'>
+    <nav className='navbar px-3'>
       <div className='flex md:justify-between container w-full mx-auto justify-between'>
         <Link
           to='/projects'

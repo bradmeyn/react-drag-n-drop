@@ -6,9 +6,7 @@ export interface Card {
   updatedAt?: Date;
   title?: string;
   detail?: string;
-  status?: CardStatus;
+  status?: string;
   project?: Project;
   projectId?: number;
 }
-
-type CardStatus = 'To Do' | 'In Progress' | 'Completed';

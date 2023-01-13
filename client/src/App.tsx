@@ -10,7 +10,7 @@ import Projects from './pages/Projects';
 
 function App() {
   return (
-    <div className='flex flex-col h-screen'>
+    <div className='flex flex-col h-screen backdrop-blur-lg bg-gradient-to-t from-slate-800  to-slate-900'>
       <main className=''>
         <Routes>
           <Route path='/' element={<Home />} />

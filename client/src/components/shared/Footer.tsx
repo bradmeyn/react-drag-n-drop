@@ -1,4 +1,5 @@
 const Footer = () => {
+  const date = new Date().getFullYear();
   return (
     <footer className='footer mt-auto items-center p-4 bg-neutral text-neutral-content justify-center'>
       <div className='justify-center'>
@@ -13,7 +14,7 @@ const Footer = () => {
             Brad Meyn
           </a>
         </p>
-        <p>Copyright © 2022 - All right reserved</p>
+        <p>Copyright © {date} - All right reserved</p>
       </div>
     </footer>
   );

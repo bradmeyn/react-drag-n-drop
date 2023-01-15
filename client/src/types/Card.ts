@@ -6,6 +6,7 @@ export interface Card {
   updatedAt?: Date;
   title?: string;
   detail?: string;
+  priority: number;
   status?: string;
   project?: Project;
   projectId?: number;

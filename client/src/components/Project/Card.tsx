@@ -1,20 +1,18 @@
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faPlus } from '@fortawesome/pro-regular-svg-icons';
 import { faPencil } from '@fortawesome/pro-light-svg-icons';
 import { Card as ICard } from '../../types/Card';
-
-import { useDraggable } from '@dnd-kit/core';
+import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
 interface CardProps {
   listCategory: string;
-  index: number;
+  key: number;
   card: ICard;
 }
 
-const Card = ({ card, index, listCategory }: CardProps) => {
+const Card = ({ card, listCategory }: CardProps) => {
   const [modalActive, setModalActive] = useState(false);
   const modal = useRef(null);
   const searchInput = useRef(null);
@@ -34,16 +32,17 @@ const Card = ({ card, index, listCategory }: CardProps) => {
     }
   });
 
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: card.id!,
-    data: {
-      card,
-      index,
-    },
-  });
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({
+      id: card.id!,
+      data: {
+        card,
+      },
+    });
 
   const style = {
-    transform: CSS.Translate.toString(transform),
+    transform: CSS.Transform.toString(transform),
+    transition,
   };
 
   // if (modalActive) {
@@ -88,8 +87,7 @@ const Card = ({ card, index, listCategory }: CardProps) => {
   // }
 
   return (
-    <li
-      key={card.id}
+    <div
       className='mb-2'
       {...attributes}
       {...listeners}
@@ -100,10 +98,12 @@ const Card = ({ card, index, listCategory }: CardProps) => {
         className='text-slate-100 w-full text-start p-4 bg-slate-700 rounded shadow-sm hover:bg-sky-700 flex justify-between items-center'
         onClick={openModal}
       >
-        <span>{card.title}</span>{' '}
+        <span>
+          {card.priority}. {card.title}
+        </span>{' '}
         <FontAwesomeIcon icon={faPencil} className='' />
       </button>
-    </li>
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
-const Login = () => {
+export default function Login() {
   type Inputs = {
     email: string;
     password: string;
@@ -37,8 +37,7 @@ const Login = () => {
           <div className='mb-3'>
             <label
               className='font-semibold text-slate-200 text-sm mb-1 block'
-              htmlFor='email'
-            >
+              htmlFor='email'>
               Email
             </label>
             <input
@@ -57,8 +56,7 @@ const Login = () => {
           <div className='mb-8'>
             <label
               className='font-semibold text-slate-200 text-sm mb-1'
-              htmlFor='password'
-            >
+              htmlFor='password'>
               Password
             </label>
             <input
@@ -74,16 +72,14 @@ const Login = () => {
               </div>
             )}
           </div>
+
           <button
             type='submit'
-            className='p-3 w-full bg-sky-600 hover:bg-sky-600/80 text-slate-100 rounded font-bold'
-          >
+            className='p-3 w-full bg-sky-600 hover:bg-sky-600/80 text-slate-100 rounded font-bold'>
             Register
           </button>
         </form>
       </div>
     </div>
   );
-};
-
-export default Login;
+}

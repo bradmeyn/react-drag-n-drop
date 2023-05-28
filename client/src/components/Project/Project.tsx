@@ -20,7 +20,6 @@ const Project = () => {
 
   const handleDragStart = (e: DragStartEvent) => {
     const { active } = e;
-
     setActiveCard(active.data.current?.card);
   };
 

@@ -4,29 +4,36 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import axios from '../api/axios';
 
-const Register = () => {
+export default function Register() {
   type Inputs = {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
+    confirmPassword: string;
   };
 
-  const schema = z.object({
-    firstName: z
-      .string()
-      .trim()
-      .min(2, { message: 'First name must be 2 or more letters' }),
-    lastName: z
-      .string()
-      .trim()
-      .min(2, { message: 'Last name must be 2 or more letters' }),
-    email: z.string().trim().email({ message: 'Email is required' }).min(1),
-    password: z
-      .string()
-      .trim()
-      .min(8, { message: 'Password must be 8 or more characters' }),
-  });
+  const schema = z
+    .object({
+      firstName: z
+        .string()
+        .trim()
+        .min(2, { message: 'First name must be 2 or more letters' }),
+      lastName: z
+        .string()
+        .trim()
+        .min(2, { message: 'Last name must be 2 or more letters' }),
+      email: z.string().trim().email({ message: 'Email is required' }).min(1),
+      password: z
+        .string()
+        .trim()
+        .min(8, { message: 'Password must be 8 or more characters' }),
+      confirmPassword: z.string().trim(),
+    })
+    .refine((data: Inputs) => data.password === data.confirmPassword, {
+      message: 'Passwords must match',
+      path: ['confirmPassword'],
+    });
 
   const {
     register,
@@ -40,6 +47,7 @@ const Register = () => {
       lastName: '',
       email: '',
       password: '',
+      confirmPassword: '',
     },
   });
 
@@ -58,8 +66,7 @@ const Register = () => {
             <div>
               <label
                 className='font-semibold text-slate-200 text-sm mb-1 block'
-                htmlFor='first-name'
-              >
+                htmlFor='first-name'>
                 First name
               </label>
               <input
@@ -78,8 +85,7 @@ const Register = () => {
             <div>
               <label
                 className='font-semibold text-slate-200 text-sm mb-1 block'
-                htmlFor='first-name'
-              >
+                htmlFor='first-name'>
                 Last name
               </label>
               <input
@@ -99,8 +105,7 @@ const Register = () => {
           <div className='mb-3'>
             <label
               className='font-semibold text-slate-200 text-sm mb-1 block'
-              htmlFor='email'
-            >
+              htmlFor='email'>
               Email
             </label>
             <input
@@ -116,11 +121,10 @@ const Register = () => {
               </div>
             )}
           </div>
-          <div className='mb-8'>
+          <div className='mb-3'>
             <label
               className='font-semibold text-slate-200 text-sm mb-1'
-              htmlFor='password'
-            >
+              htmlFor='password'>
               Password
             </label>
             <input
@@ -136,16 +140,33 @@ const Register = () => {
               </div>
             )}
           </div>
+
+          <div className='mb-8'>
+            <label
+              className='font-semibold text-slate-200 text-sm mb-1'
+              htmlFor='confirmPassword'>
+              Confirm Password
+            </label>
+            <input
+              id='confirmPassword'
+              type='password'
+              placeholder='Confirm password'
+              className='p-3 w-full rounded-lg bg-slate-600'
+              {...register('confirmPassword')}
+            />
+            {errors.confirmPassword?.message && (
+              <div className='text-sm  mt-1 text-red-300'>
+                {errors.confirmPassword?.message}
+              </div>
+            )}
+          </div>
           <button
             type='submit'
-            className='p-3 w-full bg-sky-600 hover:bg-sky-600/80 text-slate-100 rounded font-bold'
-          >
+            className='p-3 w-full bg-sky-600 hover:bg-sky-600/80 text-slate-100 rounded font-bold'>
             Register
           </button>
         </form>
       </div>
     </div>
   );
-};
-
-export default Register;
+}

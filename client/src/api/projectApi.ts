@@ -1,8 +1,11 @@
 import axios from 'axios';
 
-// const projectApi = axios.create({
-//   baseURL: 'http://localhost:3000',
-// });
+const projectApi = axios.create({
+  baseURL: 'http://localhost:3000',
+  headers: {
+    Authorization: ``,
+  },
+});
 
 // export const getProjects = async () => {
 //   const response = await projectApi.get('/api/projects');

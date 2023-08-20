@@ -8,13 +8,9 @@ export default function HomeNewCard() {
   const newCardRef = useRef(null);
   const cardInputRef = useRef(null);
 
-  function activateForm(e: MouseEvent) {
-    setIsActive(true);
-  }
-
   const deactivate = () => setIsActive(false);
 
-  useOutsideClick(newCardRef, () => {
+  useOutsideClick([newCardRef], () => {
     if (isActive) {
       setIsActive(false);
     }
@@ -38,10 +34,7 @@ export default function HomeNewCard() {
 
   return (
     <>
-      <button
-        className="p-3 text-slate-100 hover:bg-slate-300 hover:text-slate-600 w-full rounded text-start"
-        onClick={activateForm}
-      >
+      <button className="p-3 text-slate-100 hover:bg-slate-300 hover:text-slate-600 w-full rounded text-start">
         <FontAwesomeIcon icon={faPlus} className="mr-2" />
         <span>Add task</span>
       </button>

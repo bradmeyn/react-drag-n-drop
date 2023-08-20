@@ -80,7 +80,7 @@ export default function Project() {
         onDragStart={handleDragStart}
         collisionDetection={rectIntersection}
       >
-        {homePage ? null : <Navbar name={project.name} />}
+        <Navbar name={project.name} />
         <div className="container mx-auto p-4">
           <div className="flex gap-3">
             {categories.map((listCategory) => (

@@ -1,32 +1,27 @@
-import { MouseEvent, useEffect, useRef, useState } from 'react';
-import useOutsideClick from '../../hooks/useOutsideClick';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencil } from '@fortawesome/pro-light-svg-icons';
-import { Card as ICard } from '../../types/Card';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { MouseEvent, useEffect, useRef, useState } from "react";
+import useOutsideClick from "../../hooks/useOutsideClick";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil } from "@fortawesome/pro-light-svg-icons";
+import { Card as CardType } from "../../types/types";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-interface CardProps {
+interface PropTypes {
   listCategory: string;
   key: number;
-  card: ICard;
+  card: CardType;
 }
 
-const Card = ({ card, listCategory }: CardProps) => {
+export default function Card({ card, listCategory }: PropTypes) {
   const [modalActive, setModalActive] = useState(false);
-  const modal = useRef(null);
-  const searchInput = useRef(null);
+  const modalRef = useRef(null);
 
   const openModal = (e: MouseEvent) => {
     e.stopPropagation();
     setModalActive(true);
   };
 
-  const closeModal = () => {
-    setModalActive(false);
-  };
-
-  useOutsideClick(modal, () => {
+  useOutsideClick([modalRef], () => {
     if (modalActive) {
       setModalActive(false);
     }
@@ -88,23 +83,21 @@ const Card = ({ card, listCategory }: CardProps) => {
 
   return (
     <div
-      className='mb-2 animate-[fade-in-up_0.7s_ease-in-out] '
+      className="mb-2 animate-[fade-in-up_0.7s_ease-in-out] "
       {...attributes}
       {...listeners}
       ref={setNodeRef}
       style={style}
     >
       <button
-        className='text-slate-100 w-full text-start p-5 bg-slate-700 rounded shadow-sm hover:bg-sky-700 flex justify-between items-center'
+        className="text-slate-100 w-full text-start p-5 bg-slate-700 rounded shadow-sm hover:bg-sky-700 flex justify-between items-center"
         onClick={openModal}
       >
         <span>
           {card.priority}. {card.title}
-        </span>{' '}
-        <FontAwesomeIcon icon={faPencil} className='' />
+        </span>{" "}
+        <FontAwesomeIcon icon={faPencil} className="" />
       </button>
     </div>
   );
-};
-
-export default Card;
+}

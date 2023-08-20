@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import List from './List';
-import { testProject } from '../../api/data';
-import Navbar from './Navbar';
-import Card from './Card';
-import { Card as ICard } from '../../types/Card';
+import { useState } from "react";
+import List from "./List";
+import { testProject } from "../../api/data";
+import Navbar from "./Navbar";
+import Card from "./Card";
+import { Card as CardType } from "../../types/types";
 import {
   DndContext,
   DragEndEvent,
@@ -11,11 +11,11 @@ import {
   DragOverlay,
   DragStartEvent,
   rectIntersection,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 
-const Project = () => {
+export default function Project() {
   const [project, setProject] = useState(testProject);
-  const categories = ['To Do', 'In Progress', 'Completed'];
+  const categories = ["To Do", "In Progress", "Completed"];
   const [activeCard, setActiveCard] = useState<any>();
 
   const handleDragStart = (e: DragStartEvent) => {
@@ -23,54 +23,22 @@ const Project = () => {
     setActiveCard(active.data.current?.card);
   };
 
-  //   const { over, active } = e;
-
-  //   if (!over?.id) {
-  //     return;
-  //   }
-
-  //   const activeContainer = active.data.current?.sortable.containerId;
-  //   const overContainer = over.data.current?.sortable.containerId;
-  //   if (
-  //     !activeContainer ||
-  //     !overContainer ||
-  //     activeContainer === overContainer
-  //   ) {
-  //     return;
-  //   }
-
-  //   if (activeContainer !== overContainer) {
-  //     let updatedCards: ICard[] = project.cards!.map((card) => {
-  //       if (card.id === activeCard?.id) {
-  //         card.status = overContainer.toString();
-  //         return card;
-  //       } else {
-  //         return card;
-  //       }
-  //     });
-
-  //     setProject({ ...project, cards: updatedCards });
-  //   } else {
-  //     console.log('Card over existing container');
-  //   }
-  // };
-
   const handleDragEnd = (e: DragEndEvent) => {
     let newStatus: any;
 
     //over column
-    if (typeof e.over?.id === 'string') {
+    if (typeof e.over?.id === "string") {
       newStatus = e.over?.id;
 
       //over card
-    } else if (typeof e.over?.id === 'number') {
+    } else if (typeof e.over?.id === "number") {
       newStatus = e.over?.data.current?.card.status;
     } else {
       newStatus = activeCard.status;
     }
 
     if (newStatus !== activeCard.status) {
-      let updatedCards: ICard[] = project.cards!.map((card) => {
+      let updatedCards: CardType[] = project.cards!.map((card) => {
         if (card.id === activeCard.id) {
           card.status = newStatus?.toString();
           return card;
@@ -112,10 +80,9 @@ const Project = () => {
         onDragStart={handleDragStart}
         collisionDetection={rectIntersection}
       >
-        <Navbar name={project.name} />
-        <div className='container mx-auto p-4'>
-          <div></div>
-          <div className='flex gap-3'>
+        {homePage ? null : <Navbar name={project.name} />}
+        <div className="container mx-auto p-4">
+          <div className="flex gap-3">
             {categories.map((listCategory) => (
               <List listCategory={listCategory} cards={project.cards!} />
             ))}
@@ -133,6 +100,4 @@ const Project = () => {
       </DndContext>
     </>
   );
-};
-
-export default Project;
+}

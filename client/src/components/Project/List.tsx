@@ -1,21 +1,21 @@
-import Card from './Card';
-import NewCard from './NewCard';
+import Card from "./Card";
+import NewCard from "./NewCard";
 
 import {
   SortableContext,
   verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
+} from "@dnd-kit/sortable";
 
-import type { Card as CardType } from '../../types/Card';
+import type { Card as CardType } from "../../types/types";
 
-import { useDroppable } from '@dnd-kit/core';
+import { useDroppable } from "@dnd-kit/core";
 
-interface ListProps {
+interface PropTypes {
   listCategory: string;
   cards: CardType[];
 }
 
-const List = ({ listCategory, cards }: ListProps) => {
+export default function List({ listCategory, cards }: PropTypes) {
   const { setNodeRef } = useDroppable({
     id: listCategory,
   });
@@ -31,10 +31,10 @@ const List = ({ listCategory, cards }: ListProps) => {
       strategy={verticalListSortingStrategy}
     >
       <div
-        className='p-2 rounded w-full  border-2  border-slate-700'
+        className="p-2 rounded w-full  border-2 border-slate-700"
         ref={setNodeRef}
       >
-        <h2 className='p-3 font-bold underline-offset-1 text-slate-100 '>
+        <h2 className="p-3 font-bold underline-offset-1 text-slate-100 ">
           {listCategory}
         </h2>
         <ol>
@@ -46,6 +46,4 @@ const List = ({ listCategory, cards }: ListProps) => {
       </div>
     </SortableContext>
   );
-};
-
-export default List;
+}

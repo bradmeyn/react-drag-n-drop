@@ -88,14 +88,14 @@ const Card = ({ card, listCategory }: CardProps) => {
 
   return (
     <div
-      className='mb-2'
+      className='mb-2 animate-[fade-in-up_0.7s_ease-in-out] '
       {...attributes}
       {...listeners}
       ref={setNodeRef}
       style={style}
     >
       <button
-        className='text-slate-100 w-full text-start p-4 bg-slate-700 rounded shadow-sm hover:bg-sky-700 flex justify-between items-center'
+        className='text-slate-100 w-full text-start p-5 bg-slate-700 rounded shadow-sm hover:bg-sky-700 flex justify-between items-center'
         onClick={openModal}
       >
         <span>

@@ -2,15 +2,16 @@ import { MouseEvent, useEffect, useRef, useState, useContext } from "react";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faPlus } from "@fortawesome/pro-regular-svg-icons";
-import { NewCardContext } from "./HomeBoard";
 import { nanoid } from "nanoid";
+import { HomeDispatchContext } from "../../context/homeContext";
 
 export default function HomeNewCard({ list }: { list: string }) {
+  const dispatch = useContext(HomeDispatchContext)!;
   const [isActive, setIsActive] = useState(false);
   const newCardRef = useRef(null);
   const cardInputRef = useRef(null);
   const addBtnRef = useRef(null);
-  const { addNewCard } = useContext(NewCardContext);
+
   const [newCard, setNewCard] = useState({
     id: nanoid(),
     title: "",
@@ -31,7 +32,7 @@ export default function HomeNewCard({ list }: { list: string }) {
     setNewCard({ ...newCard, title: e.target.value });
 
   const handleAddCard = () => {
-    addNewCard(newCard);
+    dispatch({ type: "ADD_CARD", payload: newCard });
     setNewCard({
       id: nanoid(),
       title: "",

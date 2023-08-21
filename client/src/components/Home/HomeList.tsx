@@ -6,7 +6,7 @@ import { useDroppable } from "@dnd-kit/core";
 import { Card } from "../../types/types";
 import HomeCard from "./HomeCard";
 import HomeNewCard from "./HomeNewCard";
-import { useState } from "react";
+import { useState, useContext } from "react";
 interface PropTypes {
   list: string;
   cards: Card[];

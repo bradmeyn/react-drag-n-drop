@@ -1,4 +1,5 @@
-import { useState, createContext } from "react";
+import { useState, useContext } from "react";
+import { HomeContext, HomeDispatchContext } from "../../context/homeContext";
 import { Card } from "../../types/types";
 import {
   DndContext,
@@ -9,28 +10,17 @@ import {
   closestCenter,
 } from "@dnd-kit/core";
 import HomeList from "./HomeList";
-import { testCards } from "../../api/data";
-import { set } from "react-hook-form";
-
-export const NewCardContext = createContext<{
-  addNewCard: (card: Card) => void;
-}>({
-  addNewCard: () => {}, // noop function
-});
 
 type OverType = "list" | "card";
 
 export default function HomeBoard() {
+  const cards: Card[] = useContext(HomeContext);
+  const dispatch = useContext(HomeDispatchContext);
   const lists: string[] = ["To Do", "In Progress", "Completed"];
   const [activeCard, setActiveCard] = useState<Card | null>(null);
-  const [cards, setCards] = useState<Card[]>(testCards);
-  const addNewCard = (card: Card) => {
-    setCards([...cards, card]);
-  };
 
-  const handleDragStart = (e: DragStartEvent) => {
+  const handleDragStart = (e: DragStartEvent) =>
     setActiveCard(e.active.data.current?.card);
-  };
 
   const handleDragOver = (e: DragOverEvent) => {
     const { active, over } = e;
@@ -71,7 +61,9 @@ export default function HomeBoard() {
       const newStatus: string = over.data.current?.name;
       if (newStatus !== activeCard.status) {
         const updatedCards = listDrop(cards, activeCard, newStatus);
-        setCards(updatedCards);
+        if (dispatch) {
+          dispatch({ type: "UPDATE_CARDS", payload: updatedCards });
+        }
       }
     } else if (overType === "card" && over.id !== activeCard.id) {
       console.log("Dropped on card with ID:", over.id); // Log the card ID
@@ -80,7 +72,9 @@ export default function HomeBoard() {
         activeCard,
         over.data.current?.card.id
       );
-      setCards(updatedCards);
+      if (dispatch) {
+        dispatch({ type: "UPDATE_CARDS", payload: updatedCards });
+      }
     }
   };
 
@@ -109,15 +103,11 @@ export default function HomeBoard() {
       (card) => card.id === targetCardId
     );
 
-    if (!targetCard) {
-      console.error("Target card not found!"); // Log an error if target card is not found
-      return cards;
-    }
+    if (!targetCard) return cards;
 
     // If the target card exists and is in a different list, update the active card's status
     if (targetCard.status !== activeCard.status) {
       activeCard.status = targetCard.status;
-      console.log("Active card status updated to:", activeCard.status); // Log the new status
     }
 
     // Remove the active card from its current position
@@ -142,27 +132,25 @@ export default function HomeBoard() {
       onDragOver={handleDragOver}
       collisionDetection={closestCenter}
     >
-      <NewCardContext.Provider value={{ addNewCard }}>
-        <div className="container mx-auto p-4">
-          <div className="flex flex-col gap-5 lg:flex-row md:gap-">
-            {lists.map((list, i) => (
-              <HomeList
-                list={list}
-                key={list}
-                index={i}
-                cards={cards.filter((card) => card.status === list)}
-              />
-            ))}
-          </div>
+      <div className="container mx-auto p-4">
+        <div className="flex flex-col gap-5 lg:flex-row md:gap-">
+          {lists.map((list, i) => (
+            <HomeList
+              list={list}
+              key={list}
+              index={i}
+              cards={cards.filter((card) => card.status === list)}
+            />
+          ))}
         </div>
-        <DragOverlay>
-          {activeCard ? (
-            <div className="text-slate-100 w-full text-start p-5 font-bold bg-violet-700 rounded ">
-              {activeCard.title}
-            </div>
-          ) : null}
-        </DragOverlay>
-      </NewCardContext.Provider>
+      </div>
+      <DragOverlay>
+        {activeCard ? (
+          <div className="text-slate-100 w-full text-start p-5 font-bold bg-violet-700 rounded ">
+            {activeCard.title}
+          </div>
+        ) : null}
+      </DragOverlay>
     </DndContext>
   );
 }

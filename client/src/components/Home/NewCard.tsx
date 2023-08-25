@@ -5,7 +5,7 @@ import { faXmark, faPlus } from "@fortawesome/pro-regular-svg-icons";
 import { nanoid } from "nanoid";
 import { HomeDispatchContext } from "../../context/homeContext";
 
-export default function HomeNewCard({ list }: { list: string }) {
+export default function NewCard({ list }: { list: string }) {
   const dispatch = useContext(HomeDispatchContext)!;
   const [isActive, setIsActive] = useState(false);
   const newCardRef = useRef(null);

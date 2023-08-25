@@ -3,13 +3,13 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { useDroppable } from "@dnd-kit/core";
-import { Card } from "../../types/types";
-import HomeCard from "./HomeCard";
-import HomeNewCard from "./HomeNewCard";
-import { useState, useContext } from "react";
+import { Card as CardType } from "../../types/types";
+import Card from "./Card";
+import NewCard from "./NewCard";
+import { useState } from "react";
 interface PropTypes {
   list: string;
-  cards: Card[];
+  cards: CardType[];
   index: number;
 }
 
@@ -54,10 +54,10 @@ export default function HomeList({ list, cards, index }: PropTypes) {
         </h2>
         <ol>
           {cards.map((card) => (
-            <HomeCard setIsOverCard={setIsOverCard} key={card.id} card={card} />
+            <Card setIsOverCard={setIsOverCard} key={card.id} card={card} />
           ))}
         </ol>
-        <HomeNewCard list={list} />
+        <NewCard list={list} />
       </div>
     </SortableContext>
   );

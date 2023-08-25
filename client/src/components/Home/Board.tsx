@@ -1,5 +1,11 @@
 import { useState, useContext } from "react";
 import { HomeContext, HomeDispatchContext } from "../../context/homeContext";
+import {
+  useSensors,
+  useSensor,
+  PointerSensor,
+  MouseSensor,
+} from "@dnd-kit/core";
 import { Card } from "../../types/types";
 import {
   DndContext,
@@ -9,7 +15,7 @@ import {
   DragStartEvent,
   closestCenter,
 } from "@dnd-kit/core";
-import HomeList from "./HomeList";
+import List from "./List";
 
 type OverType = "list" | "card";
 
@@ -125,17 +131,35 @@ export default function HomeBoard() {
     return updatedCards;
   }
 
+  const pointerSensor = useSensor(PointerSensor, {
+    activationConstraint: {
+      distance: 10,
+    },
+  });
+
+  // const sensors = [
+  //   {
+  //     sensor: PointerSensor,
+  //     options: {
+  //       delay: 5000, // 500ms delay
+  //     },
+  //   },
+  // ];
+
+  const sensors = useSensors(pointerSensor);
+
   return (
     <DndContext
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       collisionDetection={closestCenter}
+      sensors={sensors}
     >
       <div className="container mx-auto p-4">
         <div className="flex flex-col gap-5 lg:flex-row md:gap-">
           {lists.map((list, i) => (
-            <HomeList
+            <List
               list={list}
               key={list}
               index={i}

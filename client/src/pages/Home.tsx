@@ -1,5 +1,5 @@
 import Navbar from "../components/Home/Navbar";
-import HomeBoard from "../components/Home/HomeBoard";
+import Board from "../components/Home/Board";
 
 export default function Home() {
   return (
@@ -18,7 +18,7 @@ export default function Home() {
         </h1>
       </div>
 
-      <HomeBoard />
+      <Board />
       <div
         className="my-5 opacity-0 animate-[fade-in-up_0.6s_800ms]"
         style={{ animationFillMode: "forwards" }}

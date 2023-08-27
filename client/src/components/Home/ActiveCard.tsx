@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { HomeDispatchContext } from "../../context/homeContext";
 import Modal from "../shared/Modal";
 import { Card as CardType } from "../../types/types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/pro-regular-svg-icons";
 
 interface PropTypes {
   card: CardType;
@@ -34,6 +36,12 @@ export default function ActiveCard({ card, isActive, dismissCard }: PropTypes) {
     // Your logic for updating a card goes here
     const updatedCard = { ...card, title: newCardTitle, detail: newCardDetail };
     dispatch({ type: "UPDATE_CARD", payload: updatedCard });
+    dismissCard();
+  };
+
+  const handleDeleteCard = () => {
+    dispatch({ type: "REMOVE_CARD", payload: card.id });
+    dismissCard();
   };
 
   return (
@@ -61,12 +69,21 @@ export default function ActiveCard({ card, isActive, dismissCard }: PropTypes) {
             onChange={(e) => handleChange(e, setNewCardDetail)}
           />
         </div>
-        <button
-          onClick={handleUpdateCard}
-          className="bg-sky-700 text-white rounded py-2 px-4 mt-2 hover:bg-sky-800 font-semibold text-lg"
-        >
-          Update task
-        </button>
+        <div className="flex items-center justify-between mt-3 gap-2">
+          <button
+            onClick={handleUpdateCard}
+            className="bg-sky-700 text-white rounded py-2 px-4 mt-2 hover:bg-sky-800 font-semibold text-lg"
+          >
+            Update task
+          </button>
+
+          <button
+            className=" text-white rounded py-2 px-4 mt-2 font-semibold text-lg hover:bg-red-500"
+            onClick={handleDeleteCard}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        </div>
       </div>
     </Modal>
   );

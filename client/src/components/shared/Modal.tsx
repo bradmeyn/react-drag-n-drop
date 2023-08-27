@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/pro-light-svg-icons";
+import { faTimes } from "@fortawesome/pro-regular-svg-icons";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import ReactDOM from "react-dom"; // Make sure to import ReactDOM correctly
 
@@ -34,7 +34,10 @@ export default function Modal({
             <div className="flex items-center justify-between mb-6">
               <div className="text-white font-bold text-4xl">{title}</div>
               <span className="">
-                <button onClick={dismissModal} className="text-white text-4xl">
+                <button
+                  onClick={dismissModal}
+                  className="text-white  hover:bg-slate-700 p-2 px-4 rounded text-xl"
+                >
                   <FontAwesomeIcon
                     icon={faTimes}
                     className="text-grey hover:text-grey-darkest"

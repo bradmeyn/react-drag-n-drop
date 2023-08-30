@@ -1,11 +1,10 @@
-import Navbar from "../components/Home/Navbar";
 import Board from "../components/Home/Board";
+import Navbar from "../components/shared/Navbar";
 
 export default function Home() {
   return (
-    <div className="text-start p-3 container mx-auto">
+    <div className="text-start container mx-auto">
       <Navbar />
-
       <div
         className="flex justify-center my-14 md:my-16 lg:md-20 opacity-0 animate-[fade-in-up_0.6s]"
         style={{ animationFillMode: "forwards" }}

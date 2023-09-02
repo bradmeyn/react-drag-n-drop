@@ -1,8 +1,10 @@
-import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Navbar from "../components/shared/Navbar";
+import { useContext } from "react";
+import { AuthDispatchContext } from "../context/authContext";
+import { loginUser } from "../services/authService";
 
 export default function Login() {
   type Inputs = {
@@ -28,14 +30,34 @@ export default function Login() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const dispatch = useContext(AuthDispatchContext);
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      const response = await loginUser(data.email, data.password);
+
+      console.log(response);
+
+      if (!response.user) {
+        return;
+      }
+
+      if (!dispatch) {
+        return;
+      }
+
+      dispatch({ type: "LOGIN", payload: response.user });
+    } catch (error) {
+      console.error("Failed to login", error);
+    }
+  };
 
   return (
     <div className="bg-cover bg-no-repeat bg-top h-full">
       <Navbar />
       <div className="mx-auto my-20 p-10 rounded bg-slate-700 py-12 w-[30rem] h-auto shadow-2xl">
         <h1 className="text-white font-extrabold text-3xl mb-8">Login</h1>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
             <label
               className="font-semibold text-slate-200 text-sm mb-1 block"

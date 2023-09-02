@@ -1,15 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/pro-regular-svg-icons";
-import NewProjectModal from "../components/Project/NewProjectModal";
 
-import { useQuery, useMutation, useQueryClient } from "react-query";
 import { Project } from "../types/types";
-import { testProject } from "../api/data";
 
 const Projects = () => {
-  const [projects, setProjects] = useState<Project[]>([testProject]);
+  const [projects, setProjects] = useState<Project[]>([]);
 
   return (
     <div className="text-start p-3 container mx-auto">
@@ -24,7 +19,6 @@ const Projects = () => {
             </div>
           </Link>
         ))}
-        <NewProjectModal />
       </div>
     </div>
   );

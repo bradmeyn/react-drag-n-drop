@@ -14,6 +14,8 @@ export const createUser = async (user: z.infer<typeof userSchema>) => {
     },
   });
 
+  console.log("New user:", newUser);
+
   return newUser;
 };
 

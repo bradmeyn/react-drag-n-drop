@@ -1,6 +1,9 @@
 import { Response, Request, NextFunction } from "express";
 import { userSchema, loginSchema } from "../schemas/schemas";
 import { createUser, getUserByEmail } from "../services/userService";
+import { generateToken, setTokenCookie } from "../utils/authUtils";
+import bcrypt from "bcrypt";
+import * as z from "zod";
 
 // @desc    Register a new user
 // @route   /api/auth/register
@@ -18,19 +21,36 @@ export const registerUser = async (
     const existingUser = await getUserByEmail(validatedUser.email);
 
     if (existingUser) {
+      console.log("User already exists");
       // If it is, respond with a 400 status code and send back an error message.
       return res.status(400).json({ errors: ["Email already in use"] });
     }
 
     // Create the user
-    const newUser = await createUser(validatedUser);
+    const user = await createUser(validatedUser);
 
-    // Respond with the newly created user
-    res.status(201).json({ ...newUser, password: undefined });
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ errors: ["Something went wrong"] });
+    }
+
+    // Generate JWT
+    const token = generateToken(
+      user.id,
+      user.email,
+      process.env.JWT_SECRET!,
+      "1d"
+    );
+
+    // Set HTTP-only cookie
+    setTokenCookie(res, token);
+
+    /// Respond with success message and user data
+    res
+      .status(201)
+      .json({ success: true, user: { id: user.id, email: user.email } });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      // If Zod is throwing the error, respond with a 400 status code and send back the error messages.
-      return res.status(400);
+      return res.status(400).json({ errors: error.errors });
     } else {
       // If it's not a Zod error, it might be something unexpected.
       // Forward it to your error-handling middleware.
@@ -47,29 +67,44 @@ export const loginUser = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.log("Login body:", req.body);
   const validatedUser = loginSchema.parse(req.body);
 
   // Find the user in the database
   const user = await getUserByEmail(validatedUser.email);
 
   if (!user) {
-    return res.status(400).json({ errors: ["Email not found"] });
+    return res
+      .status(400)
+      .json({ errors: ["Invalid login details, please try again"] });
   }
 
   // Check the password
   const isMatch = await bcrypt.compare(validatedUser.password, user.password);
 
   if (!isMatch) {
-    return res.status(400).json({ errors: ["Invalid password"] });
+    return res
+      .status(400)
+      .json({ errors: ["Invalid login details, please try again"] });
+  }
+
+  if (!process.env.JWT_SECRET) {
+    return res.status(500).json({ errors: ["Something went wrong"] });
   }
 
   // Generate JWT
-  const token = jwt.sign(
-    { id: user.id, email: user.email },
-    process.env.JWT_SECRET, // make sure to set this env variable
-    { expiresIn: "1d" } // token will expire in 1 day
+  const token = generateToken(
+    user.id,
+    user.email,
+    process.env.JWT_SECRET!,
+    "1d"
   );
 
-  // Respond with token
-  res.status(200).json({ token });
+  // Set HTTP-only cookie
+  setTokenCookie(res, token);
+
+  /// Respond with success message and user data
+  res
+    .status(200)
+    .json({ success: true, user: { id: user.id, email: user.email } });
 };

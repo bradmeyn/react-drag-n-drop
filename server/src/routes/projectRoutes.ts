@@ -1,12 +1,11 @@
-import { Router } from 'express';
-import getProjects from '../controllers/projectControllers';
+import { Router } from "express";
 
 export const projectRouter = Router();
 
-projectRouter.route('/').get(getProjects);
+// projectRouter.route("/").get(getProjects);
 // .post(createProject)
 
-projectRouter.route('/:projectId');
+projectRouter.route("/:projectId");
 // .get(getProject)
 // .delete(deleteProject)
 // .update(updateProject)

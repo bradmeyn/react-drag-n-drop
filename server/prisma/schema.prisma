@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(uuid()) @unique
   firstName String
   lastName  String
   email     String    @unique
@@ -19,27 +19,28 @@ model User {
   projects  Project[]
 }
 
+
 model Project {
-  id         Int      @id @default(autoincrement())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id         String    @id @default(uuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   name       String
-  cards      Card[]
+  task       Task[]
   repository String?
   liveSite   String?
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
+  user       User      @relation(fields: [userId], references: [id])
+  userId     String
 }
 
-model Card {
-  id        Int        @id @default(autoincrement())
+model Task {
+  id         String    @id @default(uuid())
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   title     String
   detail    String?
   status    CardStatus @default(TODO)
   project   Project?   @relation(fields: [projectId], references: [id])
-  projectId Int?
+  projectId String
 }
 
 enum CardStatus {

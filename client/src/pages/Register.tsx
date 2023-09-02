@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { AuthDispatchContext } from "../context/authContext";
+import { registerUser } from "../services/authService";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import axios from "../api/axios";
 import Navbar from "../components/shared/Navbar";
 
+import { User } from "../types/types";
+
 export default function Register() {
-  type Inputs = {
+  type RegistrationFormInputs = {
     firstName: string;
     lastName: string;
     email: string;
@@ -31,17 +34,20 @@ export default function Register() {
         .min(8, { message: "Password must be 8 or more characters" }),
       confirmPassword: z.string().trim(),
     })
-    .refine((data: Inputs) => data.password === data.confirmPassword, {
-      message: "Passwords must match",
-      path: ["confirmPassword"],
-    });
+    .refine(
+      (data: RegistrationFormInputs) => data.password === data.confirmPassword,
+      {
+        message: "Passwords must match",
+        path: ["confirmPassword"],
+      }
+    );
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>({
+  } = useForm<RegistrationFormInputs>({
     resolver: zodResolver(schema),
     defaultValues: {
       firstName: "",
@@ -52,9 +58,24 @@ export default function Register() {
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const dispatch = useContext(AuthDispatchContext);
+
+  const onSubmit: SubmitHandler<RegistrationFormInputs> = async (data) => {
     try {
-      const response = await axios.post("/register", data);
+      const { confirmPassword, ...userData } = data;
+      const response = await registerUser(userData);
+
+      console.log("Register User:", response);
+
+      if (!response.user) {
+        return;
+      }
+
+      if (!dispatch) {
+        return;
+      }
+
+      dispatch({ type: "LOGIN", payload: response.user });
     } catch (err) {}
   };
 

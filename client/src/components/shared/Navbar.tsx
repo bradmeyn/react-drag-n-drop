@@ -31,7 +31,7 @@ const Navbar = () => {
             to="/login"
             className="text-white align-middle flex items-center"
           >
-            <button className="rounded-md  text-slate-100 py-2 px-4 mr-2 text-md font-semibold">
+            <button className="rounded hover:underline hover:underline-offset-4 hover:text-sky-500 text-slate-100 py-2 px-4 mr-2 text-md font-semibold">
               Login
             </button>
           </Link>
@@ -39,7 +39,7 @@ const Navbar = () => {
             to="/register"
             className="text-white align-middle flex items-center"
           >
-            <button className="rounded-md bg-purple-600 text-slate-100 py-2 px-4 text-md font-semibold">
+            <button className="rounded bg-sky-600 hover:bg-sky-600/80 text-slate-100 py-2 px-4 text-md font-semibold">
               Sign Up
             </button>
           </Link>

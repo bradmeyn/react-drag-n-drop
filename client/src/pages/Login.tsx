@@ -5,6 +5,8 @@ import Navbar from "../components/shared/Navbar";
 import { useContext } from "react";
 import { AuthDispatchContext } from "../context/authContext";
 import { loginUser } from "../services/authService";
+import SubmitButton from "../components/shared/SubmitButton";
+import FormInput from "../components/shared/FormInput";
 
 export default function Login() {
   type Inputs = {
@@ -24,8 +26,7 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
+    formState: { errors, isSubmitting, isValid, isDirty },
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
   });
@@ -55,56 +56,31 @@ export default function Login() {
   return (
     <div className="bg-cover bg-no-repeat bg-top h-full">
       <Navbar />
-      <div className="mx-auto my-20 p-10 rounded bg-slate-700 py-12 w-[30rem] h-auto shadow-2xl">
+      <div className="mx-auto my-20 rounded bg-slate-700 py-12 max-w-xl p-6 h-auto shadow-2xl">
         <h1 className="text-white font-extrabold text-3xl mb-8">Login</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-3">
-            <label
-              className="font-semibold text-slate-200 text-sm mb-1 block"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="Email"
-              className="text-slate-50 w-full text-start p-3 rounded flex justify-between bg-slate-800 items-center  focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500"
-              {...register("email")}
-            />
-            {errors.email?.message && (
-              <div className="text-sm mt-1 text-red-300">
-                {errors.email?.message}
-              </div>
-            )}
-          </div>
-          <div className="mb-8">
-            <label
-              className="font-semibold text-slate-200 text-sm mb-1"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Password"
-              className="text-slate-50 w-full text-start p-3 rounded flex justify-between bg-slate-800 items-center  focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500"
-              {...register("password")}
-            />
-            {errors.password?.message && (
-              <div className="text-sm  mt-1 text-red-300">
-                {errors.password?.message}
-              </div>
-            )}
-          </div>
+          <FormInput
+            label="Email"
+            id="email"
+            type="email"
+            placeholder="Email"
+            register={register("email")}
+            error={errors.email?.message}
+          />
+          <FormInput
+            label="Password"
+            id="password"
+            type="password"
+            placeholder="Password"
+            register={register("password")}
+            error={errors.password?.message}
+          />
 
-          <button
-            type="submit"
-            className="p-3 w-full bg-sky-600 hover:bg-sky-600/80 text-white rounded font-bold"
-          >
-            Register
-          </button>
+          <SubmitButton
+            text="Login"
+            isDisabled={isSubmitting || isDirty || isValid}
+            isSubmitting={isSubmitting}
+          />
         </form>
       </div>
     </div>

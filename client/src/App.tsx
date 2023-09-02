@@ -13,7 +13,7 @@ import ProtectedRoute from "./components/shared/ProtectedRoute";
 function App() {
   return (
     <AuthProvider>
-      <div className="flex flex-col min-h-screen backdrop-blur-lg bg-gradient-to-t from-slate-800  to-slate-900">
+      <div className="flex flex-col min-h-screen backdrop-blur-lg bg-gradient-to-t from-slate-800 to-slate-900 px-4">
         <HomeProvider>
           <main className="">
             <Routes>

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthDispatchContext } from "../context/authContext";
 import { registerUser } from "../services/authService";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -9,15 +9,18 @@ import SubmitButton from "../components/shared/SubmitButton";
 import { faCircleCheck, faCircleX } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FormInput from "../components/shared/FormInput";
+import Alert from "../components/shared/Alert";
+
+type RegistrationFormInputs = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 export default function Register() {
-  type RegistrationFormInputs = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  };
+  const [isAlertShowing, setIsAlertShowing] = useState<boolean>(false);
 
   const schema = z
     .object({
@@ -79,11 +82,20 @@ export default function Register() {
       }
 
       dispatch({ type: "LOGIN", payload: response.user });
-    } catch (err) {}
+    } catch (err) {
+      console.error("Failed to register", err);
+      setIsAlertShowing(true);
+    }
   };
 
   return (
     <div className="bg-cover bg-no-repeat bg-top grow h-full">
+      <Alert
+        message="Error: Brad has not implemented this yet."
+        type="error"
+        isShowing={isAlertShowing}
+        setIsActive={setIsAlertShowing}
+      />
       <Navbar />
 
       <div className="mx-auto my-20 rounded bg-slate-700 py-12 max-w-xl p-6 h-auto shadow-2xl">

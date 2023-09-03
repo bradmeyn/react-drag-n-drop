@@ -31,7 +31,7 @@ const Navbar = () => {
             to="/login"
             className="text-white align-middle flex items-center"
           >
-            <button className="rounded hover:underline hover:underline-offset-4 hover:text-sky-500 text-slate-100 py-2 px-4 mr-2 text-md font-semibold">
+            <button className="rounded hover:text-sky-500 text-slate-100 py-2 px-4 mr-2 text-md font-semibold">
               Login
             </button>
           </Link>

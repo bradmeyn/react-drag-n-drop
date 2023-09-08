@@ -73,6 +73,8 @@ export default function Register() {
       const { confirmPassword, ...userData } = data;
       const response = await registerUser(userData);
 
+      console.log(response);
+
       if (!response.user) {
         return;
       }

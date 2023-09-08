@@ -1,9 +1,5 @@
 import { createContext, useReducer, ReactNode } from "react";
-
-interface User {
-  id: string;
-  email: string;
-}
+import { User } from "../types/types";
 
 type AuthState = {
   user: User | null;
@@ -19,6 +15,7 @@ export const AuthDispatchContext = createContext<
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
     case "LOGIN":
+      console.log(action.payload);
       return { user: action.payload };
     case "LOGOUT":
       return { user: null };

@@ -9,7 +9,6 @@ const axiosInstance = axios.create({
   baseURL,
   timeout: 5000,
   headers: {},
-  withCredentials: true,
 });
 
 // default common headers
@@ -18,8 +17,10 @@ axiosInstance.defaults.headers.common["Content-Type"] = "application/json";
 // interceptors
 axiosInstance.interceptors.request.use(
   (config) => {
-    // The token in HTTP-only cookies is automatically sent with each request
-    // No need to manually set the Authorization header
+    const token = sessionStorage.getItem("jwt"); // Get the token from sessionStorage
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`; // Set the token in the Authorization header
+    }
     return config;
   },
   (error) => {
@@ -31,10 +32,25 @@ axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
+  async (error) => {
     if (error.response && error.response.status === 401) {
-      // handle unauthorized error globally
+      // handle unauthorized error, maybe refresh token and retry
+      const refreshToken = sessionStorage.getItem("refreshToken");
+
+      if (refreshToken) {
+        try {
+          // Assume we have a function that calls your token refresh endpoint
+          // const newToken = await refreshTheToken(refreshToken);
+          // // Save the new token and retry the original request
+          // sessionStorage.setItem("jwt", newToken);
+          // error.config.headers.Authorization = `Bearer ${newToken}`;
+          // return axiosInstance.request(error.config);
+        } catch (refreshError) {
+          // Handle token refresh failure, force logout, etc.
+        }
+      }
     }
+
     return Promise.reject(error);
   }
 );

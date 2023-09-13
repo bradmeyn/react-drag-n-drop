@@ -1,18 +1,21 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import Navbar from "../components/shared/Navbar";
+import Navbar from "../components/shared/Navbar/Navbar";
 import { useContext } from "react";
 import { AuthDispatchContext } from "../context/authContext";
 import { loginUser } from "../services/authService";
 import SubmitButton from "../components/shared/SubmitButton";
 import FormInput from "../components/shared/FormInput";
+import { useNavigate } from "react-router-dom";
+
+type Inputs = {
+  email: string;
+  password: string;
+};
 
 export default function Login() {
-  type Inputs = {
-    email: string;
-    password: string;
-  };
+  const navigate = useNavigate();
 
   const schema = z.object({
     email: z
@@ -37,8 +40,6 @@ export default function Login() {
     try {
       const response = await loginUser(data.email, data.password);
 
-      console.log(response);
-
       if (!response.user) {
         return;
       }
@@ -47,7 +48,10 @@ export default function Login() {
         return;
       }
 
+      console.log("Login successful", response.user);
       dispatch({ type: "LOGIN", payload: response.user });
+
+      navigate("/projects");
     } catch (error) {
       console.error("Failed to login", error);
     }
@@ -57,7 +61,7 @@ export default function Login() {
     <div className="bg-cover bg-no-repeat bg-top h-full">
       <Navbar />
       <div className="mx-auto my-20 rounded bg-slate-700 py-12 max-w-xl p-6 h-auto shadow-2xl">
-        <h1 className="text-white font-extrabold text-3xl mb-8">Login</h1>
+        <h1 className="text-white font-extrabold text-4xl mb-8">Login</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormInput
             label="Email"
@@ -78,7 +82,7 @@ export default function Login() {
 
           <SubmitButton
             text="Login"
-            isDisabled={isSubmitting || isDirty || isValid}
+            isDisabled={isSubmitting}
             isSubmitting={isSubmitting}
           />
         </form>

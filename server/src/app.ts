@@ -23,9 +23,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const apiRouter = express.Router();
-apiRouter.use(authenticateUser);
+
 apiRouter.use("/auth", authRouter);
-apiRouter.use("/projects", projectRouter);
+apiRouter.use("/projects", authenticateUser, projectRouter);
 
 app.use("/api", apiRouter);
 

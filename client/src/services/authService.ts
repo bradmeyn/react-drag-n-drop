@@ -1,9 +1,10 @@
 import axiosInstance from "../api/apiClient";
 
 // Set the token in the storage and axios headers
-export const setToken = (token: string) => {
-  localStorage.setItem("token", token);
-  axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+export const setAccessToken = (accessToken: string) => {
+  axiosInstance.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${accessToken}`;
 };
 
 export const loginUser = async (email: string, password: string) => {
@@ -12,9 +13,9 @@ export const loginUser = async (email: string, password: string) => {
       email,
       password,
     });
-    const token: string = response.data.token;
-    if (token) {
-      setToken(token);
+    const { accessToken } = response.data;
+    if (accessToken) {
+      setAccessToken(accessToken);
     }
     return response.data;
   } catch (error) {
@@ -23,16 +24,13 @@ export const loginUser = async (email: string, password: string) => {
 };
 
 export const logoutUser = () => {
-  // Remove the token and user info from the storage
-  localStorage.removeItem("token");
-
   // Remove global axios header
   delete axiosInstance.defaults.headers.common["Authorization"];
 };
 
 // Get the token from the storage
-export const getToken = () => {
-  return localStorage.getItem("token");
+export const getAccessToken = () => {
+  return localStorage.getItem("accessToken");
 };
 
 type RegisterUser = {
@@ -45,9 +43,9 @@ type RegisterUser = {
 export const registerUser = async (userData: RegisterUser) => {
   try {
     const response = await axiosInstance.post("/api/auth/register", userData);
-    const { token } = response.data;
-    if (token) {
-      setToken(token);
+    const { accessToken } = response.data;
+    if (accessToken) {
+      setAccessToken(accessToken);
     }
     return response.data;
   } catch (error) {

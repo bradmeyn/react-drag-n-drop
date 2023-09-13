@@ -32,7 +32,7 @@ export default function Modal({
             ref={modalRef}
           >
             <div className="flex items-center justify-between mb-6">
-              <div className="text-white font-bold text-4xl">{title}</div>
+              <div className="text-white font-bold text-3xl">{title}</div>
               <span className="">
                 <button
                   onClick={dismissModal}

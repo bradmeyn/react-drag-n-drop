@@ -4,7 +4,7 @@ import { registerUser } from "../services/authService";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import Navbar from "../components/shared/Navbar";
+import Navbar from "../components/shared/Navbar/Navbar";
 import SubmitButton from "../components/shared/SubmitButton";
 import { faCircleCheck, faCircleX } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -101,7 +101,7 @@ export default function Register() {
       <Navbar />
 
       <div className="mx-auto my-20 rounded bg-slate-700 py-12 max-w-xl p-6 h-auto shadow-2xl">
-        <h1 className="text-white font-extrabold text-3xl mb-8">Sign Up</h1>
+        <h1 className="text-white font-extrabold text-4xl mb-8">Sign Up</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid md:grid-flow-col md:gap-4">
             <FormInput

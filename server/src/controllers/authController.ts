@@ -1,5 +1,8 @@
 import { Response, Request, NextFunction } from "express";
 import { userSchema, loginSchema } from "../schemas/schemas";
+
+import { TokenPayload } from "../utils/authUtils";
+
 import {
   createUser,
   getUserByEmail,
@@ -8,12 +11,11 @@ import {
 import {
   createAccessToken,
   createRefreshToken,
-  setTokenCookie,
   verifyToken,
 } from "../utils/authUtils";
 import bcrypt from "bcrypt";
 import * as z from "zod";
-import { create } from "domain";
+import { JwtPayload } from "jsonwebtoken";
 
 // @desc    Register a new user
 // @route   /api/auth/register
@@ -26,6 +28,7 @@ export const registerUser = async (
   try {
     // Validate the request body against the schema
     const validatedUser = userSchema.parse(req.body);
+    console.log("Validated user:", validatedUser);
 
     // Check if the email is already in use
     const existingUser = await getUserByEmail(validatedUser.email);
@@ -39,24 +42,16 @@ export const registerUser = async (
     // Create the user
     const user = await createUser(validatedUser);
 
-    if (!process.env.JWT_SECRET) {
-      return res.status(500).json({ errors: ["Something went wrong"] });
-    }
-
     // Generate refresh token
-    const refreshToken = createRefreshToken(user);
-
-    // Set refresh token in a cookie
-    setTokenCookie(res, refreshToken);
+    createRefreshToken(res, user);
 
     // Generate access token
     const accessToken = createAccessToken(user);
 
     /// Respond with success message and user data
     res.status(201).json({
-      success: true,
       accessToken,
-      user: { id: user.id, email: user.email },
+      user: { id: user.id },
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -79,7 +74,7 @@ export const refreshToken = async (
   next: NextFunction
 ): Promise<Response | void> => {
   // Get the refresh token from the cookie
-  const token: string = req.cookies?.token;
+  const token: string = req.cookies?.token as JwtPayload["id"];
 
   if (!token) {
     return res.status(401).json({ errors: ["Unauthorized"] });
@@ -101,19 +96,20 @@ export const refreshToken = async (
     }
 
     // Generate refresh token
-    const refreshToken = createRefreshToken(user);
-
-    // Set refresh token in a cookie
-    setTokenCookie(res, refreshToken);
+    createRefreshToken(res, user);
 
     // Generate access token
     const accessToken = createAccessToken(user);
 
     // Respond with the new access token and user data
     return res.status(200).json({
-      success: true,
       accessToken,
-      user: { id: user.id, email: user.email },
+      user: {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+      },
     });
   } catch (error) {
     console.log("Error:", error);
@@ -150,23 +146,20 @@ export const loginUser = async (
       .json({ errors: ["Invalid login details, please try again"] });
   }
 
-  if (!process.env.JWT_SECRET) {
-    return res.status(500).json({ errors: ["Something went wrong"] });
-  }
-
   // Generate refresh token
-  const refreshToken = createRefreshToken(user);
-
-  // Set refresh token in a cookie
-  setTokenCookie(res, refreshToken);
+  createRefreshToken(res, user);
 
   // Generate access token
   const accessToken = createAccessToken(user);
 
   /// Respond with success message and user data
   res.status(200).json({
-    success: true,
     accessToken,
-    user: { id: user.id, email: user.email },
+    user: {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+    },
   });
 };

@@ -1,4 +1,3 @@
-import { create } from "domain";
 import { Response } from "express";
 import { JwtPayload, sign, verify } from "jsonwebtoken";
 import { User } from "@prisma/client";
@@ -13,14 +12,13 @@ export const createAccessToken = (user: User): string => {
   });
 };
 
-export const createRefreshToken = (user: User): string => {
-  return sign({ id: user.id }, process.env.REFRESH_SECRET!, {
+export const createRefreshToken = (res: Response, user: User): void => {
+  const refreshToken = sign({ id: user.id }, process.env.REFRESH_SECRET!, {
     expiresIn: "1d",
   });
-};
 
-export const setTokenCookie = (res: Response, token: string): void => {
-  res.cookie("token", token, {
+  // Set refresh token in a cookie
+  res.cookie("token", refreshToken, {
     httpOnly: true,
     sameSite: "none",
     secure: process.env.NODE_ENV !== "development",

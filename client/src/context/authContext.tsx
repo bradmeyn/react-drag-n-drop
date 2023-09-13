@@ -1,4 +1,4 @@
-import { createContext, useReducer, ReactNode } from "react";
+import React, { createContext, useReducer, useEffect, ReactNode } from "react";
 import { User } from "../types/types";
 
 type AuthState = {
@@ -15,7 +15,6 @@ export const AuthDispatchContext = createContext<
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
     case "LOGIN":
-      console.log(action.payload);
       return { user: action.payload };
     case "LOGOUT":
       return { user: null };
@@ -30,6 +29,24 @@ type AuthProviderProps = {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [state, dispatch] = useReducer(authReducer, { user: null });
+
+  // // Load user from local storage when the component mounts
+  // useEffect(() => {
+  //   const user = localStorage.getItem("user");
+
+  //   if (user) {
+  //     dispatch({ type: "LOGIN", payload: JSON.parse(user) });
+  //   }
+  // }, []);
+
+  // // Save user to local storage whenever it changes
+  // useEffect(() => {
+  //   if (state.user) {
+  //     localStorage.setItem("user", JSON.stringify(state.user));
+  //   } else {
+  //     localStorage.removeItem("user");
+  //   }
+  // }, [state.user]);
 
   return (
     <AuthContext.Provider value={state}>

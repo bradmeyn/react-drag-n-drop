@@ -4,10 +4,6 @@
 
 Workshop is a kanban/trello style app.
 
-### Features:
-
-- Drag & Drop with Dnd-kit
-
 ### Software Used
 
 - React (w/Vite)
@@ -16,3 +12,9 @@ Workshop is a kanban/trello style app.
 - Express
 - Prisma
 - PostgreSQL
+
+## Screenshots
+
+### Landing Page
+
+![Landing Page Screenshot](./client/screenshots/screenshot_1.png)

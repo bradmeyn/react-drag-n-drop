@@ -1,19 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyToken } from "../utils/authUtils";
 
-interface JwtPayload {
-  id: string;
-}
-
-interface AuthenticatedRequest extends Request {
-  user?: JwtPayload;
-  cookies: {
-    refreshToken?: string;
-  };
-}
-
 export const authenticateUser = (
-  req: AuthenticatedRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ): void => {

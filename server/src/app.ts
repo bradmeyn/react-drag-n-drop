@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { projectRouter } from "./routes/projectRoutes";
+import { taskRouter } from "./routes/taskRoutes";
 import { authRouter } from "./routes/authRoutes";
 import { authenticateUser } from "./middleware/authenticateUser";
 
@@ -26,6 +27,7 @@ const apiRouter = express.Router();
 
 apiRouter.use("/auth", authRouter);
 apiRouter.use("/projects", authenticateUser, projectRouter);
+apiRouter.use("/projects/:projectId/tasks", authenticateUser, taskRouter);
 
 app.use("/api", apiRouter);
 

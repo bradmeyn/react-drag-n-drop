@@ -1,8 +1,5 @@
 import { Response, Request, NextFunction } from "express";
 import { userSchema, loginSchema } from "../schemas/schemas";
-
-import { TokenPayload } from "../utils/authUtils";
-
 import {
   createUser,
   getUserByEmail,

@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { HomeDispatchContext } from "../../context/homeContext";
 import Modal from "../shared/Modal";
 import { Card as CardType } from "../../types/types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/pro-regular-svg-icons";
 
 interface PropTypes {
   card: CardType;
@@ -80,9 +78,7 @@ export default function ActiveCard({ card, isActive, dismissCard }: PropTypes) {
           <button
             className=" text-white rounded py-2 px-4 mt-2 font-semibold text-lg hover:bg-red-500"
             onClick={handleDeleteCard}
-          >
-            <FontAwesomeIcon icon={faTrash} />
-          </button>
+          ></button>
         </div>
       </div>
     </Modal>

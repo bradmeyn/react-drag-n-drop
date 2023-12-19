@@ -1,7 +1,8 @@
 import { MouseEvent, useEffect, useRef, useState, useContext } from "react";
 import useOutsideClick from "../../hooks/useOutsideClick";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil } from "@fortawesome/pro-light-svg-icons";
+
+import { PencilIcon } from "@heroicons/react/24/solid";
+
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Card as CardType } from "../../types/types";
@@ -60,15 +61,12 @@ export default function HomeCard({ card, setIsOverCard }: PropTypes) {
         {isDragging ? (
           <div className="text-transparent w-full text-start p-5 font-bold bg-transparent rounded shadow-sm flex justify-between items-center border-dashed border-2 border-purple-700">
             <span>{card.title}</span>
-            <FontAwesomeIcon icon={faPencil} className="" />
+            {/* <PencilIcon className="text-sm" /> */}
           </div>
         ) : (
           <button className="text-slate-100 w-full border-transparent text-start p-5 font-bold bg-slate-700 rounded shadow-sm hover:bg-sky-700 flex justify-between items-center group">
             <span>{card.title}</span>
-            <FontAwesomeIcon
-              icon={faPencil}
-              className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-            />
+            {/* <PencilIcon className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-sm" /> */}
           </button>
         )}
       </div>

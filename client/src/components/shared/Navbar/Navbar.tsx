@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faScrewdriverWrench } from "@fortawesome/pro-duotone-svg-icons";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/authContext";
@@ -24,11 +22,6 @@ const Navbar = () => {
       <div className="flex container w-full mx-auto justify-between items-center">
         <div className="flex items-center">
           <Link to="/" className="text-3xl">
-            <FontAwesomeIcon
-              icon={faScrewdriverWrench}
-              style={logoStyle}
-              className="mr-3 "
-            />
             <div className="font-bold inline-block text-slate-50 ">
               Workshop
             </div>

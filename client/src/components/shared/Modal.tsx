@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/pro-regular-svg-icons";
+
 import useOutsideClick from "../../hooks/useOutsideClick";
 import ReactDOM from "react-dom"; // Make sure to import ReactDOM correctly
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 interface PropTypes {
   title: string;
@@ -38,10 +38,7 @@ export default function Modal({
                   onClick={dismissModal}
                   className="text-white  hover:bg-slate-700 p-2 px-4 rounded text-xl"
                 >
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className="text-grey hover:text-grey-darkest"
-                  />
+                  <XMarkIcon className="text-grey hover:text-grey-darkest" />
                 </button>
               </span>
             </div>

@@ -1,5 +1,4 @@
-import { faCircleExclamation } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 
 interface PropTypes {
   label: string;
@@ -35,7 +34,7 @@ export default function FormInput({
       />
       {error && (
         <small className="text-sm mt-1 text-red-300 flex items-center gap-1">
-          <FontAwesomeIcon icon={faCircleExclamation} />
+          <ExclamationCircleIcon />
           <span>{error}</span>
         </small>
       )}

@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/pro-duotone-svg-icons";
+import { PlusIcon } from "@heroicons/react/24/solid";
 import { MouseEvent, useRef } from "react";
 
 interface ActivationButtonProps {
@@ -13,7 +12,7 @@ export const ActivationButton: React.FC<ActivationButtonProps> = ({
     className="p-10 text-slate-100 font-bold bg-slate-700 hover:bg-sky-700 rounded text-start text-xl"
     onClick={activateForm}
   >
-    <FontAwesomeIcon icon={faPlus} className="mr-2" />
+    <PlusIcon />
     <span>Add Project</span>
   </button>
 );

@@ -1,7 +1,8 @@
 import { MouseEvent, useEffect, useRef, useState, useContext } from "react";
 import useOutsideClick from "../../hooks/useOutsideClick";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark, faPlus } from "@fortawesome/pro-regular-svg-icons";
+
+import { XMarkIcon, PlusIcon } from "@heroicons/react/24/solid";
+
 import { nanoid } from "nanoid";
 import { HomeDispatchContext } from "../../context/homeContext";
 
@@ -71,7 +72,7 @@ export default function NewCard({ list }: { list: string }) {
             onClick={deactivate}
             className="p-2 text-white flex items-center justify-center text-xl"
           >
-            <FontAwesomeIcon icon={faXmark} />
+            <XMarkIcon className="w-5 h-5" />
           </button>
         </div>
       </div>
@@ -82,7 +83,6 @@ export default function NewCard({ list }: { list: string }) {
       onClick={activateForm}
       ref={addBtnRef}
     >
-      <FontAwesomeIcon icon={faPlus} className="mr-2" />
       <span>Add task</span>
     </button>
   );

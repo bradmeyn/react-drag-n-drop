@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/pro-regular-svg-icons";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 interface PropTypes {
   type: "error" | "success" | "info";
@@ -32,7 +31,7 @@ export default function Alert({
           aria-label="Close alert"
           className="ml-5 text-xl"
         >
-          <FontAwesomeIcon icon={faXmark} />
+          <XMarkIcon />
         </button>
       </div>
     </div>

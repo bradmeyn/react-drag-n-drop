@@ -1,6 +1,5 @@
 import useOutsideClick from "../../../hooks/useOutsideClick";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faXmark } from "@fortawesome/pro-duotone-svg-icons";
+
 import { MouseEvent, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

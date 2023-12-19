@@ -6,10 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Navbar from "../components/shared/Navbar/Navbar";
 import SubmitButton from "../components/shared/SubmitButton";
-import { faCircleCheck, faCircleX } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import FormInput from "../components/shared/FormInput";
 import Alert from "../components/shared/Alert";
+import {
+  CheckBadgeIcon,
+  ExclamationCircleIcon,
+} from "@heroicons/react/24/solid";
 
 type RegistrationFormInputs = {
   firstName: string;
@@ -148,14 +151,14 @@ export default function Register() {
           <div>
             {password === confirmPassword && confirmPassword ? (
               <small className="text-sm mt-1 text-green-300 flex gap-1 items-center">
-                <FontAwesomeIcon icon={faCircleCheck} />
+                <CheckBadgeIcon />
                 <div className="ms-2">Passwords match</div>
               </small>
             ) : (
               password &&
               confirmPassword && (
                 <small className="text-sm mt-1 text-red-300 flex gap-1 items-center">
-                  <FontAwesomeIcon icon={faCircleX} />
+                  <ExclamationCircleIcon />
                   <div className="ms-2">Passwords don't match</div>
                 </small>
               )

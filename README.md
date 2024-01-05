@@ -1,4 +1,4 @@
-# Workshop
+# React Drag n Drop
 
 ### Description
 
@@ -8,13 +8,8 @@ Workshop is a kanban/trello style app.
 
 - React (w/Vite)
 - Tailwind
-- Node
-- Express
-- Prisma
-- PostgreSQL
+- Typescript
 
 ## Screenshots
 
-### Landing Page
-
-![Landing Page Screenshot](./client/screenshots/screenshot_1.png)
+![Screenshot](./screenshots/screenshot.jpg)

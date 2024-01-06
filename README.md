@@ -2,7 +2,7 @@
 
 ### Description
 
-Workshop is a kanban/trello style app.
+Trello stle drag n drop with React, TypeScript & Tailwind.
 
 ### Software Used
 

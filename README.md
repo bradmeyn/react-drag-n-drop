@@ -2,7 +2,7 @@
 
 ### Description
 
-Trello stle drag n drop with React, TypeScript & Tailwind.
+Trello style drag & drop with React, TypeScript & Tailwind.
 
 ### Software Used
 

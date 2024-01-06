@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { HomeDispatchContext } from "../../context/homeContext";
 import Modal from "../shared/Modal";
 import { Card as CardType } from "../../types";
+import { TrashIcon } from "@heroicons/react/24/solid";
 
 interface PropTypes {
   card: CardType;
@@ -76,9 +77,11 @@ export default function ActiveCard({ card, isActive, dismissCard }: PropTypes) {
           </button>
 
           <button
-            className=" text-white rounded py-2 px-4 mt-2 font-semibold text-lg hover:bg-red-500"
+            className=" text-white rounded p-2 mt-2 font-semibold text-lg hover:bg-red-500"
             onClick={handleDeleteCard}
-          ></button>
+          >
+            <TrashIcon className="h-6 w-6 text-white" aria-hidden="true" />
+          </button>
         </div>
       </div>
     </Modal>

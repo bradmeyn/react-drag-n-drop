@@ -4,10 +4,6 @@ import {
   useSensors,
   useSensor,
   PointerSensor,
-  MouseSensor,
-} from "@dnd-kit/core";
-import type { Card } from "../../types";
-import {
   DndContext,
   DragEndEvent,
   DragOverEvent,
@@ -15,6 +11,8 @@ import {
   DragStartEvent,
   closestCenter,
 } from "@dnd-kit/core";
+import type { Card } from "../../types";
+
 import List from "./List";
 
 type OverType = "list" | "card";

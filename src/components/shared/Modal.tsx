@@ -36,9 +36,9 @@ export default function Modal({
               <span className="">
                 <button
                   onClick={dismissModal}
-                  className="text-white  hover:bg-slate-700 p-2 px-4 rounded text-xl"
+                  className="text-white hover:bg-slate-700 p-2 rounded text-xl"
                 >
-                  <XMarkIcon className="text-grey hover:text-grey-darkest" />
+                  <XMarkIcon className="w-6 h-6" />
                 </button>
               </span>
             </div>

@@ -66,7 +66,7 @@ export default function HomeCard({ card, setIsOverCard }: PropTypes) {
         ) : (
           <button className="text-slate-100 w-full border-transparent text-start p-5 font-bold bg-slate-700 rounded shadow-sm hover:bg-sky-700 flex justify-between items-center group">
             <span>{card.title}</span>
-            {/* <PencilIcon className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-sm" /> */}
+            <PencilIcon className=" w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-sm" />
           </button>
         )}
       </div>

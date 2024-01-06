@@ -1,7 +1,7 @@
-import { MouseEvent, useEffect, useRef, useState, useContext } from "react";
+import { MouseEvent, useRef, useState, useContext } from "react";
 import useOutsideClick from "../../hooks/useOutsideClick";
 
-import { XMarkIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { PlusIcon, XMarkIcon, PencilIcon } from "@heroicons/react/24/solid";
 
 import { nanoid } from "nanoid";
 import { HomeDispatchContext } from "../../context/homeContext";
@@ -66,7 +66,7 @@ export default function NewCard({ list }: { list: string }) {
             onClick={handleAddCard}
             className="bg-sky-700 text-white rounded py-2 px-4"
           >
-            Add task
+            <span> Add task</span>
           </button>
           <button
             onClick={deactivate}
@@ -79,11 +79,13 @@ export default function NewCard({ list }: { list: string }) {
     </>
   ) : (
     <button
-      className="p-3 text-slate-100 hover:bg-slate-300 hover:text-slate-600 w-full rounded text-start"
+      className="p-3 flex items-center gap-2 text-slate-100 hover:bg-slate-300 hover:text-slate-900 w-full rounded text-start relative"
       onClick={activateForm}
       ref={addBtnRef}
     >
+      <PlusIcon className="w-5 h-5" />
       <span>Add task</span>
+      <PencilIcon className="w-5 h-5 absolute right-3 opacity-0 group-hover:opacity-100" />
     </button>
   );
 }
